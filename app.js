@@ -1,35 +1,24 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const mysql = require('mysql2');
+const db = require('./mysql/db');
+const sessionMiddleware = require('./mysql/session'); 
 
 const productRoutes = require('./routes/productRoutes');
+const signupRoutes = require('./routes/signupRoutes');
+const loginRoutes = require('./routes/loginRoutes');
 
 const app = express();
 const port = 3000;
 
-// const multer = require('multer');
-
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '!veritatis7',
-    database: 'marketmate'
-});
-
-db.connect((err) => {
-    if(err) {
-        console.error('mysql 연결 실패: ',err);
-        return;
-    }
-    console.log('mysql db 연결 성공');
-})
-
 app.locals.db = db;
+console.log(db);
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(sessionMiddleware);
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
@@ -40,7 +29,17 @@ app.get('/product', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'product.html'));
   });
 
-app.use('/', productRoutes);
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+app.use('/product', productRoutes);
+app.use('/signup', signupRoutes);
+app.use('/login', loginRoutes);
 
 
 app.listen(port, () => {

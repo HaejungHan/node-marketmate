@@ -14,12 +14,14 @@
       <div class="nav-menu">
         <a href="/product" class="nav-item">상품등록/검색</a>
         <a href="/mypage" class="nav-item">마이페이지</a>
-        <a href="/chat" class="nav-item">채팅</a>
+        <!-- 로그인 상태에 따라 로그아웃 버튼을 표시 -->
+        <button id="logout-button" class="cta-button" style="display:none;">로그아웃</button>
       </div>
     </div>
   </nav>
 
-  <section class="hero">
+  <!-- 로그인 상태일 경우 hero 섹션을 숨김 -->
+  <section id="hero" class="hero" style="display:block;">
     <div class="container">
       <h1>스마트한 쇼핑의 시작</h1>
       <p>MarketMate와 함께 더 현명한 쇼핑을 경험하세요</p>
@@ -38,6 +40,45 @@
     <!-- 상품 리스트를 동적으로 추가할 부분 -->
     <div id="product-list" class="product-grid"></div>
   </main>
+  <!-- 모달 창 HTML -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        
+        <!-- 이미지 -->
+        <div class="modal-image">
+            <img id="modal-image" src="" alt="Product Image" />
+        </div>
+        
+        <div class="section-box">
+          <h3>판매자</h3>
+          <p id="modal-seller"></p>
+      </div>
+
+        <!-- 제목 -->
+        <div class="section-box">
+            <h3 id="modal-title"></h3>
+        </div>
+
+        <!-- 설명 -->
+        <div class="section-box">
+            <h3>상세 설명</h3>
+            <p id="modal-description"></p>
+        </div>
+
+        <!-- 가격 -->
+        <div class="section-box">
+            <h3>가격</h3>
+            <p id="modal-price"></p>
+        </div>
+
+        <!-- 등록일 -->
+        <div class="section-box">
+            <h3>등록일</h3>
+            <p id="modal-created-at"></p>
+        </div>
+    </div>
+</div>
 <script src="js/index.js"></script>
 </body>
 </html>

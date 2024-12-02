@@ -7,6 +7,7 @@ const sessionMiddleware = require('./mysql/session');
 const productRoutes = require('./routes/productRoutes');
 const signupRoutes = require('./routes/signupRoutes');
 const loginRoutes = require('./routes/loginRoutes');
+const mypageRoutes = require('./routes/mypageRoutes');
 
 const app = express();
 const port = 3000;
@@ -26,6 +27,10 @@ app.get('/', (req, res) => {
   });
 
 app.get('/product', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'search.html'));
+  });
+
+app.get('/product/post', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'product.html'));
   });
 
@@ -37,9 +42,14 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
+app.get('/mypage', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'myPage.html'));
+});
+
 app.use('/product', productRoutes);
 app.use('/signup', signupRoutes);
 app.use('/login', loginRoutes);
+app.use('/mypage', mypageRoutes);
 
 
 app.listen(port, () => {

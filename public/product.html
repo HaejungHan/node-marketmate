@@ -3,84 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MarketMate</title>
+  <title>상품 등록 - MarketMate</title>
   <link rel="stylesheet" href="/css/product.css">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="navbar-container">
-      <a href="/" class="navbar-brand">MarketMate</a>
-      <div class="nav-menu">
-        <a href="/product" class="nav-item">상품등록/검색</a>
-        <!-- <a href="/mypage" class="nav-item">마이페이지</a>
-        <a href="/chat" class="nav-item">채팅</a> -->
-      </div>
-    </div>
-  </nav>
+    <nav class="navbar">
+        <div class="navbar-container">
+          <a href="/" class="navbar-brand">MarketMate</a>
+          <div class="nav-menu">
+            <a href="/product" class="nav-item">상품검색</a>
+            <a href="/product/post" class="nav-item active">상품등록</a>
+            <a href="/mypage" class="nav-item">마이페이지</a>
+            <!-- 로그인 상태에 따라 로그아웃 버튼을 표시 -->
+            <button id="logout-button" class="cta-button" style="display:none;">로그아웃</button>
+          </div>
+        </div>
+      </nav>
 
   <div class="container">
-    <div class="tabs">
-        <button class="tab active" data-tab="search">상품 검색</button>
-        <button class="tab" data-tab="post">상품 등록</button>
-    </div>
 
-    <div class="search-section" id="search-section">
-        <div class="search-bar">
-            <input type="text" class="search-input" id="search-input" placeholder="찾으시는 상품을 검색해보세요">
-            <button class="search-button">
-                <svg class="nav-icon" viewBox="0 0 24 24" fill="white">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-                검색
-            </button>
-        </div>
-    </div>
-
-    <div id="product-list" class="product-grid"></div>
-</div>
-
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <span class="close-button">&times;</span>
-        
-        <!-- 이미지 -->
-        <div class="modal-image">
-            <img id="modal-image" src="" alt="Product Image" />
-        </div>
-
-        <div class="section-box">
-            <h3>판매자</h3>
-            <p id="modal-seller"></p>
-        </div>
-
-        <!-- 제목 -->
-        <div class="section-box">
-            <h3 id="modal-title"></h3>
-        </div>
-
-        <!-- 설명 -->
-        <div class="section-box">
-            <h3>상세 설명</h3>
-            <p id="modal-description"></p>
-        </div>
-
-        <!-- 가격 -->
-        <div class="section-box">
-            <h3>가격</h3>
-            <p id="modal-price"></p>
-        </div>
-
-        <!-- 등록일 -->
-        <div class="section-box">
-            <h3>등록일</h3>
-            <p id="modal-created-at"></p>
-        </div>
-    </div>
-</div>
     <div class="post-form" id="post-form">
-        <form id="product-form" method="POST" action="/product/create" enctype="multipart/form-data">
+        <form id="product-form" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">상품명</label>
                 <input type="text" id="title" name="title" required>
@@ -94,16 +39,14 @@
                 <textarea id="description" name="description" required></textarea>
             </div>
             <div class="form-group">
-                <label for="images">상품 이미지</label>
-                <input type="file" name="image" required />
+                <label for="image">상품 이미지</label>
+                <input type="file" id="image" name="image" required />
             </div>
             <button type="submit" class="submit-button">상품 등록하기</button>
         </form>
     </div>
-</div>
-<script src="js/product.js"></script>
+  </div>
+  <script src="/js/index.js"></script>
+  <script src="/js/product.js"></script>
 </body>
 </html>
-
-
-

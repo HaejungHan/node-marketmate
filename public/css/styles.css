@@ -117,22 +117,25 @@ body {
 
 .product-card {
     background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
-    flex-direction: column; /* 이미지와 정보를 세로로 배치 */
+    flex-direction: column;
+    height: 100%;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .product-image {
+    position: relative;
     width: 100%;
-    height: 200px;
-    background: #f0f0f0;
+    height: 250px; /* 높이를 고정 */
+    background-color: #f5f5f5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -142,26 +145,53 @@ body {
 .product-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 이미지가 비율을 유지하며, 영역에 맞게 크기 조정 */
+    object-fit: cover;
+    border-bottom: 3px solid var(--primary); /* 이미지 아래에 강조선 추가 */
 }
 
 .product-info {
-    padding: 1rem;
-    flex-grow: 1; /* 상품 정보 영역이 남은 공간을 차지하게 설정 */
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* 각 요소 간 간격을 설정 */
+    flex-grow: 1;
+}
+
+.product-info h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--text);
+    margin: 0;
+    flex-grow: 1;
 }
 
 .product-price {
-    color: var(--primary);
+    font-size: 1.4rem;
     font-weight: bold;
-    font-size: 1.2rem;
+    color: var(--primary);
     margin: 0.5rem 0;
 }
 
 .product-meta {
-    display: flex;
-    justify-content: space-between;
-    color: #666;
     font-size: 0.9rem;
+    color: #777;
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 배치 */
+    gap: 8px; /* 항목 간 간격 설정 */
+    margin-top: 10px; /* 메타 항목 위에 간격 추가 */
+}
+
+.product-meta span {
+    margin: 0;
+    text-align: left; /* 기본적으로 왼쪽 정렬 */
+}
+
+.product-meta span:first-child {
+    text-align: left;
+}
+
+.product-meta span:last-child {
+    text-align: right;
 }
 
 .section-title {
@@ -173,120 +203,230 @@ body {
     gap: 0.5rem;
 }
 
+
 /* 모달 배경 */
 .modal {
     display: none; /* 기본적으로 숨겨짐 */
     position: fixed;
-    z-index: 1;
+    z-index: 1000; /* 다른 요소들 위에 위치 */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    background-color: rgba(0, 0, 0, 0.7); /* 배경 어둡게 */
     overflow: auto;
     padding-top: 60px;
+    animation: fadeIn 0.3s ease; /* 모달 등장 애니메이션 */
 }
 
 /* 모달 내용 스타일 */
 .modal-content {
     background-color: #fff;
     margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
+    padding: 30px;
+    border-radius: 12px; /* 모서리를 부드럽게 */
     width: 80%;
-    max-width: 600px; /* 최대 너비를 좀 더 넓게 설정 */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 모달에 그림자 추가 */
+    max-width: 700px; /* 모달 최대 너비 */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
     display: flex;
     flex-direction: column;
     gap: 20px;
     height: auto;
-    max-height: 80vh; /* 최대 높이를 화면의 80%로 제한 */
-    overflow-y: auto; /* 내용이 많을 경우 스크롤 가능하게 */
+    max-height: 80vh; /* 화면 높이에 맞게 제한 */
+    overflow-y: auto;
+    font-family: 'Roboto', sans-serif; /* 세련된 글꼴 */
+    transition: transform 0.3s ease-in-out; /* 등장 애니메이션 */
 }
 
-/* 제목 스타일 */
-#modal-title {
-    font-size: 1.8rem;
+/* 모달 등장 애니메이션 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 닫기 버튼 스타일 */
+.close-button {
+    color: #aaa;
+    font-size: 32px;
     font-weight: bold;
-    color: #333;
-    margin: 0;
-    text-align: center; /* 제목 중앙 정렬 */
+    cursor: pointer;
+    transition: color 0.3s ease; /* 색상 변경 애니메이션 */
 }
 
-/* 설명, 가격, 등록일 스타일 */
-#modal-description,
-#modal-price,
-#modal-created-at {
-    font-size: 1rem;
-    color: #555;
-    margin: 5px 0;
-    line-height: 1.5;
+.close-button:hover,
+.close-button:focus {
+    color: #2196F3; /* 블루로 색상 변경 */
 }
 
 /* 이미지 스타일 */
 .modal-image img {
     width: 100%;
     height: auto;
-    max-height: 400px; /* 이미지의 최대 높이 */
+    max-height: 400px; /* 이미지 최대 높이 */
     object-fit: cover; /* 이미지 비율을 유지하면서 잘라냄 */
     border-radius: 8px;
-}
-
-/* 닫기 버튼 스타일 */
-.close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close-button:hover,
-.close-button:focus {
-    color: black;
-    text-decoration: none;
-}
-
-/* 모달 내용에서 이미지와 텍스트의 레이아웃 */
-.modal-content .modal-image {
-    display: flex;
-    justify-content: center; /* 이미지 중앙 정렬 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 이미지 그림자 */
 }
 
 /* 각 항목을 구분할 회색 박스 */
 .modal-content .section-box {
     background-color: #f5f5f5; /* 연한 회색 배경 */
-    padding: 15px;
+    padding: 20px;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 섹션 박스 그림자 */
 }
 
 /* 각 항목의 제목 스타일 */
 .modal-content .section-box h3 {
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.4rem;
+    font-weight: 600;
     color: #333;
-    margin: 0 0 10px 0;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px; /* 제목 간격 */
 }
 
-/* 가격이나 등록일 같은 정보는 회색 박스 내에 배치 */
+/* 가격, 설명 등의 스타일 */
 .modal-content .section-box p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #555;
     margin: 5px 0;
+    line-height: 1.6;
+    word-wrap: break-word; /* 긴 단어 줄 바꿈 처리 */
 }
 
+/* 모달 제목 스타일 */
+#modal-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase; /* 대문자로 제목 강조 */
+    letter-spacing: 1px; /* 제목 간격 */
+}
+
+/* 설명, 가격, 등록일 스타일 */
+#modal-description,
+#modal-price,
+#modal-created-at {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+/* 판매자 스타일 */
+#modal-seller {
+    font-size: 1rem;
+    color: #777;
+    font-weight: 500;
+}
+
+/* 모달 이미지 위치 스타일 */
+.modal-content .modal-image {
+    display: flex;
+    justify-content: center; /* 이미지 중앙 정렬 */
+    margin-bottom: 20px; /* 이미지와 텍스트 사이에 여백 */
+}
+
+/* 모달 창 안의 버튼 스타일 */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽에 배치 */
+    gap: 20px;
+}
+
+.modal-actions button {
+    background-color: #2196F3;
+    color: white;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-actions button:hover {
+    background-color: #1976D2;
+}
+
+/* 모바일 화면에서의 스타일 조정 */
 @media (max-width: 768px) {
-    .nav-menu {
-        gap: 1rem;
+    .modal-content {
+        width: 90%;
+        padding: 20px;
     }
-    
-    .hero h1 {
-        font-size: 2rem;
+
+    .close-button {
+        font-size: 28px;
     }
-    
-    .container {
-        padding: 1rem;
+
+    .modal-content .section-box h3 {
+        font-size: 1.2rem;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-actions button {
+        width: 100%;
+        font-size: 1rem;
     }
 }
+
+/* 상품 문의 폼 스타일 */
+.inquiry-form {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.inquiry-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.inquiry-form button {
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.inquiry-form button:hover {
+    background-color: #0056b3;
+}
+
+/* 버튼 스타일 */
+.cta-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: #0056b3;
+}
+
+

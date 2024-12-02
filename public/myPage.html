@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Page - MarketMate</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/product.css">
+  <link rel="stylesheet" href="/css/mypage.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="/" class="navbar-brand">MarketMate</a>
+      <div class="nav-menu">
+        <a href="/product" class="nav-item">상품검색</a>
+        <a href="/product/post" class="nav-item active">상품등록</a>
+        <a href="/mypage" class="nav-item">마이페이지</a>
+        <!-- 로그인 상태에 따라 로그아웃 버튼을 표시 -->
+        <button id="logout-button" class="cta-button" style="display:none;">로그아웃</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h2 class="section-title">내가 등록한 상품들</h2>
+
+    <!-- 상품 리스트 -->
+    <div id="product-list" class="product-grid"></div>
+
+    <!-- 페이지네이션 버튼 -->
+    <div class="pagination">
+      <button id="prev-button" disabled>이전</button>
+      <span id="page-info">1 / 1</span>  <!-- 페이지 정보 -->
+      <button id="next-button" disabled>다음</button>
+  </div>
+
+  </main>
+
+  <!-- 상품 상세 모달 -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="close-button" class="close-button">&times;</span>
+
+        <div class="modal-image">
+          <img id="modal-image" src="" alt="Product Image" />
+          <input id="modal-image-file" type="file" accept="image/*" />
+      </div>
+
+        <div class="section-box">
+            <h3>제목</h3>
+            <input id="modal-title" type="text" placeholder="상품 제목" />
+        </div>
+
+        <div class="section-box">
+            <h3>상세 설명</h3>
+            <textarea id="modal-description" placeholder="상세 설명"></textarea>
+        </div>
+
+        <div class="section-box">
+            <h3>가격</h3>
+            <input id="modal-price" type="number" placeholder="가격" />
+        </div>
+
+        <div class="section-box">
+            <h3>등록일</h3>
+            <input id="modal-created-at" type="text" disabled placeholder="등록일" />
+        </div>
+
+        <div class="modal-actions">
+            <button id="save-product">저장</button>
+            <button id="delete-product">삭제</button>
+        </div>
+    </div>
+</div>
+  
+  <script src="/js/index.js"></script>
+  <script src="/js/mypage.js"></script>
+</body>
+</html>

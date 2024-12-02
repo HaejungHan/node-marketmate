@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MarketMate</title>
+  <title>상품 검색 - MarketMate</title>
+  <link rel="stylesheet" href="/css/product.css">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
@@ -21,26 +22,27 @@
     </div>
   </nav>
 
-  <!-- 로그인 상태일 경우 hero 섹션을 숨김 -->
-  <section id="hero" class="hero" style="display:block;">
-    <div class="container">
-      <h1>스마트한 쇼핑의 시작</h1>
-      <p>MarketMate와 함께 더 현명한 쇼핑을 경험하세요</p>
-      <a href="/signup" class="cta-button">시작하기</a>
+  <div class="container">
+    <div class="tabs">
+        <button class="tab active" data-tab="search">상품 검색</button>
     </div>
-  </section>
 
-  <main class="container">
-    <h2 class="section-title">
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="var(--primary)">
-        <path d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-      </svg>
-      최근 등록된 상품
-    </h2>
-    
-    <!-- 상품 리스트를 동적으로 추가할 부분 -->
+    <div class="search-section" id="search-section">
+        <div class="search-bar">
+            <input type="text" class="search-input" id="search-input" placeholder="찾으시는 상품을 검색해보세요">
+            <button class="search-button" id="search-button">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="white">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+                검색
+            </button>
+        </div>
+    </div>
+
     <div id="product-list" class="product-grid"></div>
-  </main>
+    <div id="pagination"></div>
+  </div>
+
   <!-- 모달 창 HTML -->
   <div id="modal" class="modal">
     <div class="modal-content">
@@ -78,7 +80,7 @@
             <h3>등록일</h3>
             <p id="modal-created-at"></p>
         </div>
-        
+
         <button id="inquiry-button" class="cta-button">상품 문의</button>
 
         <!-- 상품 문의 폼 (숨김 처리) -->
@@ -88,7 +90,9 @@
             <button id="submit-inquiry" class="cta-button">문의 보내기</button>
         </div>
     </div>
-</div>
-<script src="/js/index.js"></script>
+  </div>
+
+  <script src="/js/index.js"></script>
+  <script src="/js/search.js"></script>
 </body>
 </html>

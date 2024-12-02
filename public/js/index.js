@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('modal');
+    // 상품 문의
+    const inquiryButton = document.getElementById('inquiry-button');
+    const inquiryForm = document.getElementById('inquiry-form');
+    const submitInquiryButton = document.getElementById('submit-inquiry');
+    // 모달
     const closeButton = document.querySelector('.close-button');
     const modalTitle = document.getElementById('modal-title');
     const modalImage = document.getElementById('modal-image');
@@ -8,20 +13,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalCreatedAt = document.getElementById('modal-created-at');
     const modalSeller = document.getElementById('modal-seller');
 
+    const productList = document.getElementById('product-list');
+    
+    if (!modal || !closeButton || !productList) {
+        console.error("필수 DOM 요소가 로드되지 않았습니다.");
+        return; // 필수 요소가 없으면 더 이상 진행하지 않음
+    }
+
+    // 모달 및 상품 목록 처리
     fetch('/product/recent-products')
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                const productList = document.getElementById('product-list');
                 data.products.forEach(product => {
                     const imagePath = product.image_path;
-                    const imageSrc = `${imagePath.replace(/\\/g, '/')}`;  
+                    const imageSrc = `${imagePath.replace(/\\/g, '/')}`;
                     const formattedDate = formatDate(product.created_at);
 
                     // 상품 카드 생성
                     const productCard = document.createElement('div');
                     productCard.classList.add('product-card');
-
                     productCard.innerHTML = `
                         <div class="product-image">
                             <img src="${imageSrc}" alt="${product.title}" />
@@ -69,17 +80,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // 로그인 상태 확인
-    fetch('/login/check-login-status')
-    .then(response => response.json())
-    .then(data => {
-        console.log('로그인 상태:', data);  // 데이터를 로그로 출력
-        if (data.loggedIn) {
+     // 로그인 상태 확인
+     const checkLoginStatus = () => {
+        return fetch('/login/check-login-status')
+            .then(response => response.json())
+            .then(data => data.loggedIn);
+    };
+
+    // 로그인 상태에 따라 표시되는 항목 변경
+    checkLoginStatus().then(isLoggedIn => {
+        console.log('로그인 상태:', isLoggedIn);  // 데이터를 로그로 출력
+        if (isLoggedIn) {
             document.getElementById('hero').style.display = 'none';
             document.getElementById('logout-button').style.display = 'block';
         }
-    })
-    .catch(error => {
+    }).catch(error => {
         console.error('로그인 상태 확인 오류:', error);
     });
 
@@ -94,25 +109,31 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
+    // 로그인 상태가 필요한 링크 처리
     const loginRequiredLinks = document.querySelectorAll('.nav-item');
     loginRequiredLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            fetch('/login/check-login-status')
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.loggedIn) {
-                        e.preventDefault(); // 링크 이동 막기
-                        alert('로그인이 필요합니다!');
-                        window.location.href = '/login'; // 로그인 페이지로 리다이렉트
-                    }
-                })
-                .catch(error => {
-                    console.error('로그인 상태 확인 오류:', error);
-                    alert('로그인 상태를 확인하는 중 오류가 발생했습니다.');
-                });
+            // 로그인 상태를 비동기적으로 확인
+            checkLoginStatus().then(isLoggedIn => {
+                if (!isLoggedIn) {
+                    e.preventDefault(); // 페이지 이동 막기
+                    alert('로그인이 필요합니다!');
+                    window.location.href = '/login'; // 로그인 페이지로 리다이렉트
+                }
+            }).catch(error => {
+                e.preventDefault(); // 링크 이동 막기
+                console.error('로그인 상태 확인 오류:', error);
+                alert('로그인 상태를 확인하는 중 오류가 발생했습니다.');
+            });
         });
     });
+
+
+    
+
 });
+
+
 
 function formatDate(dateString) {
     const date = new Date(dateString);
